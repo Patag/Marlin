@@ -36,11 +36,29 @@ void controllerfan_update() {
   if (ELAPSED(ms, nextMotorCheck)) {
     nextMotorCheck = ms + 2500UL; // Not a time critical function, so only check every 2.5s
 
-    // If any of the drivers or the bed are enabled...
-    if (X_ENABLE_READ == X_ENABLE_ON || Y_ENABLE_READ == Y_ENABLE_ON || Z_ENABLE_READ == Z_ENABLE_ON
+    // If any of the drivers or the hotend or the bed are enabled...
+    if (X_ENABLE_READ == X_ENABLE_ON || Y_ENABLE_READ == Y_ENABLE_ON || Z_ENABLE_READ == Z_ENABLE_ON 
       #if HAS_HEATED_BED
         || thermalManager.temp_bed.soft_pwm_amount > 0
       #endif
+      #if HOTENDS
+        || thermalManager.temp_hotend[0].soft_pwm_amount > 0
+        #if HOTENDS > 1
+          || thermalManager.temp_hotend[1].soft_pwm_amount > 0
+          #if HOTENDS > 2
+            || thermalManager.temp_hotend[2].soft_pwm_amount > 0
+            #if HOTENDS > 3
+              || thermalManager.temp_hotend[3].soft_pwm_amount > 0
+              #if HOTENDS > 4
+                || thermalManager.temp_hotend[4].soft_pwm_amount > 0
+                #if HOTENDS > 5
+                  || thermalManager.temp_hotend[5].soft_pwm_amount > 0
+                #endif // HOTENDS > 5
+              #endif // HOTENDS > 4
+            #endif // HOTENDS > 3
+          #endif // HOTENDS > 2
+        #endif // HOTENDS > 1
+      #endif // HOTENDS
         #if HAS_X2_ENABLE
           || X2_ENABLE_READ == X_ENABLE_ON
         #endif
