@@ -36,7 +36,7 @@
  */
 
 #include "../../inc/MarlinConfigPre.h"
-
+#include "../../feature/leds/neopixel.h"
 #if HAS_GRAPHICAL_LCD
 
 #include "ultralcd_DOGM.h"
@@ -219,10 +219,6 @@ void MarlinUI::set_font(const MarlinFont font_nr) {
 // Initialize or re-initialize the LCD
 void MarlinUI::init_lcd() {
 
-  #if PIN_EXISTS(LCD_BACKLIGHT) // Enable LCD backlight
-    OUT_WRITE(LCD_BACKLIGHT_PIN, HIGH);
-  #endif
-
   #if EITHER(MKS_12864OLED, MKS_12864OLED_SSD1306)
     SET_OUTPUT(LCD_PINS_DC);
     #if !defined(LCD_RESET_PIN)
@@ -235,14 +231,21 @@ void MarlinUI::init_lcd() {
     _delay_ms(5);
     OUT_WRITE(LCD_RESET_PIN, HIGH);
     _delay_ms(5); // delay to allow the display to initialize
-  #endif
-
-  #if PIN_EXISTS(LCD_RESET)
     u8g.begin();
   #endif
-
+  
+  #if PIN_EXISTS(LCD_BACKLIGHT) // Enable LCD backlight
+    OUT_WRITE(LCD_BACKLIGHT_PIN, HIGH);
+  #elif ENABLED(FYSETC_MINI_12864_2_1)
+    uint8_t background_color[4] = NEOPIXEL_BKGD_COLOR;
+    pixels.setBrightness(NEOPIXEL_BRIGHTNESS); // 0 - 255 range
+    pixels.setPixelColor(NEOPIXEL_BKGD_LED_INDEX, pixels.Color(background_color[0], background_color[1], background_color[2], background_color[3]));
+    pixels.show();
+  #endif
+  
   #if HAS_LCD_CONTRAST
     refresh_contrast();
+    u8g.setContrast(255);
   #endif
 
   #if ENABLED(LCD_SCREEN_ROT_90)
