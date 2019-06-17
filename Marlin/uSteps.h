@@ -1,7 +1,7 @@
-#define X_uST   256
-#define Y_uST   256
-#define Z_uST   256
-#define E0_uST  256
+#define X_uST   64
+#define Y_uST   64
+#define Z_uST   64
+#define E0_uST  64
 
 #define X_degStepper    0.9
 #define Y_degStepper    0.9
