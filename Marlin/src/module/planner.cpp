@@ -1294,16 +1294,17 @@ void Planner::check_axes_activity() {
     #else
 
       #if HAS_FAN0
-        analogWrite(FAN_PIN, CALC_FAN_SPEED(0));
+        analogWrite(pin_t(FAN_PIN), CALC_FAN_SPEED(0));
       #endif
       #if HAS_FAN1
-        analogWrite(FAN1_PIN, CALC_FAN_SPEED(1));
+        analogWrite(pin_t(FAN1_PIN), CALC_FAN_SPEED(1));
       #endif
       #if HAS_FAN2
-        analogWrite(FAN2_PIN, CALC_FAN_SPEED(2));
+        analogWrite(pin_t(FAN2_PIN), CALC_FAN_SPEED(2));
       #endif
     #endif
-
+  #else
+    UNUSED(tail_fan_speed);
   #endif // FAN_COUNT > 0
 
   #if ENABLED(AUTOTEMP)
