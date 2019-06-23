@@ -517,8 +517,8 @@
 #define Y_HOME_BUMP_MM 0
 #define Z_HOME_BUMP_MM 0
 #define HOMING_BUMP_DIVISOR { 2, 2, 4 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
-//#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
-#define HOMING_BACKOFF_MM { 0, 0, 8 }  // (mm) Move away from the endstops after homing
+#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
+#define HOMING_BACKOFF_MM { 0, 0, 5 }  // (mm) Move away from the endstops after homing
 
 // When G28 is called, this option will make Y home before X
 #define HOME_Y_BEFORE_X
@@ -620,7 +620,7 @@
 
 // @section machine
 
-#define AXIS_RELATIVE_MODES {false, false, false, false}
+#define AXIS_RELATIVE_MODES { false, false, false, false }
 
 // Add a Duplicate option for well-separated conjoined nozzles
 //#define MULTI_NOZZLE_DUPLICATION
@@ -637,7 +637,7 @@
 #define DEFAULT_STEPPER_DEACTIVE_TIME 120
 #define DISABLE_INACTIVE_X true
 #define DISABLE_INACTIVE_Y true
-#define DISABLE_INACTIVE_Z true  // set to false if the nozzle will fall down on your printed part when print has finished.
+#define DISABLE_INACTIVE_Z true  // Set to false if the nozzle will fall down on your printed part when print has finished.
 #define DISABLE_INACTIVE_E true
 
 #define DEFAULT_MINIMUMFEEDRATE       0.0     // minimum feedrate
@@ -648,13 +648,11 @@
 // @section lcd
 
 #if EITHER(ULTIPANEL, EXTENSIBLE_UI)
-  #define MANUAL_FEEDRATE {50*60, 50*60, 5*60, 60} // Feedrates for manual moves along X, Y, Z, E from panel
-
-
+  #define MANUAL_FEEDRATE { 50*60, 50*60, 5*60, 60 } // Feedrates for manual moves along X, Y, Z, E from panel
   #if ENABLED(ULTIPANEL)
-    #define MANUAL_E_MOVES_RELATIVE // Show LCD extruder moves as relative rather than absolute positions
-    #define ULTIPANEL_FEEDMULTIPLY  // Comment to disable setting feedrate multiplier via encoder
-  #endif		
+    #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
+    #define ULTIPANEL_FEEDMULTIPLY  // Encoder sets the feedrate multiplier on the Status Screen
+  #endif
 #endif
 
 // @section extras
@@ -755,7 +753,7 @@
   // Define pin which is read during calibration
   #ifndef CALIBRATION_PIN
     #define CALIBRATION_PIN -1 // Override in pins.h or set to -1 to use your Z endstop
-    #define CALIBRATION_PIN_INVERTING false // set to true to invert the pin
+    #define CALIBRATION_PIN_INVERTING false // Set to true to invert the pin
     //#define CALIBRATION_PIN_PULLDOWN
     #define CALIBRATION_PIN_PULLUP
   #endif
@@ -1122,7 +1120,7 @@
   //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
   #define STATUS_FAN_FRAMES 4       // :[0,1,2,3,4] Number of fan animation frames
   #define STATUS_HEAT_PERCENT       // Show heating in a progress bar
-  //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
+  #define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
 
   // Frivolous Game Options
   //#define MARLIN_BRICKOUT
@@ -1201,11 +1199,11 @@
  * See http://marlinfw.org/docs/features/lin_advance.html for full instructions.
  * Mention @Sebastianv650 on GitHub to alert the author of any issues.
  */
-//#define LIN_ADVANCE
+#define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
-  //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
-  #define LIN_ADVANCE_K 0.22    // Unit: mm compression per 1mm/s extruder speed
-  //#define LA_DEBUG            // If enabled, this will generate debug information output over USB.
+  #define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
+  #define LIN_ADVANCE_K 0.15    // Unit: mm compression per 1mm/s extruder speed
+  #define LA_DEBUG            // If enabled, this will generate debug information output over USB.
 #endif
 
 // @section leveling
@@ -1630,7 +1628,7 @@
   #if AXIS_IS_TMC(X)
     #define X_CURRENT     800  // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_MICROSTEPS  X_uST  // 0..256
-   #define X_RSENSE     0.075
+    #define X_RSENSE     0.075
   #endif
 
   #if AXIS_IS_TMC(X2)
@@ -1724,7 +1722,6 @@
   //#define E5_CS_PIN         -1
 
   /**
-  
    * Software option for SPI driven drivers (TMC2130, TMC2160, TMC2660, TMC5130 and TMC5160).
    * The default SW SPI pins are defined the respective pins files,
    * but you can override or define them here.
@@ -1810,7 +1807,7 @@
   #endif
 
   /**
-   * TMC2130, TMC2160, TMC2208, TMC5130 and TMC5160 only
+   * TMC2130, TMC2160, TMC2208, TMC2209, TMC5130 and TMC5160 only
    * The driver will switch to spreadCycle when stepper speed is over HYBRID_THRESHOLD.
    * This mode allows for faster movements at the expense of higher noise levels.
    * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
@@ -1818,10 +1815,10 @@
    */
   #define HYBRID_THRESHOLD
 
-  #define X_HYBRID_THRESHOLD     200  // [mm/s]
-  #define X2_HYBRID_THRESHOLD    200
-  #define Y_HYBRID_THRESHOLD     200
-  #define Y2_HYBRID_THRESHOLD    200
+  #define X_HYBRID_THRESHOLD     100  // [mm/s]
+  #define X2_HYBRID_THRESHOLD    100
+  #define Y_HYBRID_THRESHOLD     100
+  #define Y2_HYBRID_THRESHOLD    100
   #define Z_HYBRID_THRESHOLD       3
   #define Z2_HYBRID_THRESHOLD      3
   #define Z3_HYBRID_THRESHOLD      3
@@ -1845,7 +1842,7 @@
    * It is advised to set X/Y/Z_HOME_BUMP_MM to 0.
    * M914 X/Y/Z to live tune the setting
    */
-  //#define SENSORLESS_HOMING // StallGuard capable drivers only
+  #define SENSORLESS_HOMING // StallGuard capable drivers only
 
   /**
    * Use StallGuard2 to probe the bed with the nozzle.
@@ -1857,8 +1854,8 @@
 
   #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
     // TMC2209: 0...255. TMC2130: -64...63
-    #define X_STALL_SENSITIVITY  1
-    #define Y_STALL_SENSITIVITY  1
+    #define X_STALL_SENSITIVITY  -2
+    #define Y_STALL_SENSITIVITY  -2
     //#define Z_STALL_SENSITIVITY  1
   #endif
 
@@ -2117,14 +2114,14 @@
 //#define SPINDLE_LASER_ENABLE
 #if ENABLED(SPINDLE_LASER_ENABLE)
 
-  #define SPINDLE_LASER_ENABLE_INVERT   false  // set to "true" if the on/off function is reversed
-  #define SPINDLE_LASER_PWM             true   // set to true if your controller supports setting the speed/power
-  #define SPINDLE_LASER_PWM_INVERT      true   // set to "true" if the speed/power goes up when you want it to go slower
-  #define SPINDLE_LASER_POWERUP_DELAY   5000   // delay in milliseconds to allow the spindle/laser to come up to speed/power
-  #define SPINDLE_LASER_POWERDOWN_DELAY 5000   // delay in milliseconds to allow the spindle to stop
-  #define SPINDLE_DIR_CHANGE            true   // set to true if your spindle controller supports changing spindle direction
+  #define SPINDLE_LASER_ENABLE_INVERT   false  // Set to "true" if the on/off function is reversed
+  #define SPINDLE_LASER_PWM             true   // Set to true if your controller supports setting the speed/power
+  #define SPINDLE_LASER_PWM_INVERT      true   // Set to "true" if the speed/power goes up when you want it to go slower
+  #define SPINDLE_LASER_POWERUP_DELAY   5000   // (ms) Delay to allow the spindle/laser to come up to speed/power
+  #define SPINDLE_LASER_POWERDOWN_DELAY 5000   // (ms) Delay to allow the spindle to stop
+  #define SPINDLE_DIR_CHANGE            true   // Set to true if your spindle controller supports changing spindle direction
   #define SPINDLE_INVERT_DIR            false
-  #define SPINDLE_STOP_ON_DIR_CHANGE    true   // set to true if Marlin should stop the spindle before changing rotation direction
+  #define SPINDLE_STOP_ON_DIR_CHANGE    true   // Set to true if Marlin should stop the spindle before changing rotation direction
 
   /**
    *  The M3 & M4 commands use the following equation to convert PWM duty cycle to speed/power

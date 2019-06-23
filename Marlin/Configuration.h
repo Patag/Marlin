@@ -40,7 +40,7 @@
  */
 #define CONFIGURATION_H_VERSION 020000
 #undef STRING_DISTRIBUTION_DATE
-#define STRING_DISTRIBUTION_DATE "2019-06-21"
+#define STRING_DISTRIBUTION_DATE "2019-06-23"
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -128,7 +128,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 250000
+#define BAUDRATE 115200
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -141,7 +141,7 @@
 
 // Optional custom name for your RepStrap or other custom machine
 // Displayed in the LCD "Ready" message
-#define CUSTOM_MACHINE_NAME "3D PrinTaGuel"
+#define CUSTOM_MACHINE_NAME "Anet A8 NewGen"
 
 // Define this to set a unique identifier for this printer, (Used by some programs to differentiate between machines)
 // You can use an online service to generate a random UUID. (eg http://www.uuidgenerator.net/version4)
@@ -654,7 +654,6 @@
  *          TMC2208, TMC2208_STANDALONE, TMC2209, TMC2209_STANDALONE,
  *          TMC26X,  TMC26X_STANDALONE,  TMC2660, TMC2660_STANDALONE,
  *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
-									   
  * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'L6470', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
  */
 #define X_DRIVER_TYPE  TMC5160
@@ -721,7 +720,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
- #define DEFAULT_MAX_FEEDRATE          { 400, 400, 10, 50} // Dual Z
+#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -835,8 +834,8 @@
 /**
  * Z Servo Probe, such as an endstop switch on a rotating arm.
  */
-//#define Z_PROBE_SERVO_NR 0   // Defaults to SERVO 0 connector.
-//#define Z_SERVO_ANGLES {70,0}  // Z Servo Deploy and Stow angles
+//#define Z_PROBE_SERVO_NR 0       // Defaults to SERVO 0 connector.
+//#define Z_SERVO_ANGLES { 70, 0 } // Z Servo Deploy and Stow angles
 
 /**
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
@@ -904,7 +903,7 @@
 #define MIN_PROBE_EDGE 10
 
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 8000
+#define XY_PROBE_SPEED 7000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
@@ -912,10 +911,17 @@
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST)
 
-// The number of probes to perform at each point.
-//   Set to 2 for a fast/slow probe, using the second probe result.
-//   Set to 3 or more for slow probes, averaging the results.
+/**
+ * Multiple Probing
+ *
+ * You may get improved results by probing 2 or more times.
+ * With EXTRA_PROBING the more atypical reading(s) will be disregarded.
+ *
+ * A total of 2 does fast/slow probes with a weighted average.
+ * A total of 3 or more adds more slow probes, taking the average.
+ */
 #define MULTIPLE_PROBING 3
+#define EXTRA_PROBING    1
 
 /**
  * Z probes require clearance when deploying, stowing, and moving between
@@ -1010,7 +1016,7 @@
 
 //#define UNKNOWN_Z_NO_RAISE // Don't raise Z (lower the bed) if Z is "unknown." For beds that fall when Z is powered off.
 
-#define Z_HOMING_HEIGHT 8  // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
+#define Z_HOMING_HEIGHT 5  // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                              // Be sure you have this distance over your Z_MAX_POS in case.
 
 // Direction of endstops when homing; 1=MAX, -1=MIN
@@ -1073,7 +1079,7 @@
 //#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #define NUM_RUNOUT_SENSORS   1     // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
-  #define FIL_RUNOUT_INVERTING false // set to true to invert the logic of the sensor.
+  #define FIL_RUNOUT_INVERTING false // Set to true to invert the logic of the sensor.
   #define FIL_RUNOUT_PULLUP          // Use internal pullup for filament runout pins.
   //#define FIL_RUNOUT_PULLDOWN      // Use internal pulldown for filament runout pins.
 
@@ -1180,7 +1186,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 5
+  #define GRID_MAX_POINTS_X 6
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
@@ -1925,13 +1931,13 @@
 
 //
 // MKS MINI12864 with graphic controller and SD support
-// http://reprap.org/wiki/MKS_MINI_12864
+// https://reprap.org/wiki/MKS_MINI_12864
 //
 //#define MKS_MINI_12864
 
 //
 // FYSETC variant of the MINI12864 graphic controller with SD support
-// https://wiki.fysetc.com/Mini12864_Panel/?fbclid=IwAR1FyjuNdVOOy9_xzky3qqo_WeM5h-4gpRnnWhQr_O1Ef3h0AFnFXmCehK8
+// https://wiki.fysetc.com/Mini12864_Panel/
 //
 //#define FYSETC_MINI_12864_X_X  // Type C/D/E/F. No tunable RGB Backlight by default
 //#define FYSETC_MINI_12864_1_2  // Type C/D/E/F. Simple RGB Backlight (always on)
