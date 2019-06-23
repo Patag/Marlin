@@ -476,11 +476,11 @@
   //#define DEFAULT_Ki 2.25
   //#define DEFAULT_Kd 440
 
-  // ANET A8 E3DV6 24V Extruder at 190 °C
+  // ANET A8 E3DV6 24V Extruder at 200 °C
   //(measured after M106 S255 with M303 E0 S190 C10 U)
-  #define DEFAULT_Kp 23.59
-  #define DEFAULT_Ki 1.85
-  #define DEFAULT_Kd 75.09
+  #define DEFAULT_Kp 22.93
+  #define DEFAULT_Ki 1.74
+  #define DEFAULT_Kd 75.75
 #endif // PIDTEMP
 
 //===========================================================================
@@ -528,11 +528,11 @@
   //#define DEFAULT_bedKi 1.41
   //#define DEFAULT_bedKd 1675.16
 
-  // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 10 cycles.
+  // FIND YOUR OWN: "M303 E-1 C10 S80" to run autotune on the bed at 80 °C for 10 cycles.
   // A8 24V + MAX_BED_POWER 168 + 3mm borosilicate + protection thermique sous le bed
-  #define DEFAULT_bedKp 76.39
-  #define DEFAULT_bedKi 10.04
-  #define DEFAULT_bedKd 145.29
+  #define DEFAULT_bedKp 33.95
+  #define DEFAULT_bedKi 6.33
+  #define DEFAULT_bedKd 121.45
 #endif // PIDTEMPBED
 
 // @section extruder
