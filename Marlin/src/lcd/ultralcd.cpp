@@ -104,7 +104,7 @@
   #endif
 #endif
 
-#if ENABLED(SDSUPPORT)
+#if ENABLED(SDSUPPORT) && PIN_EXISTS(SD_DETECT)
   uint8_t lcd_sd_status;
 #endif
 
@@ -315,10 +315,8 @@ void MarlinUI::init() {
 
   #endif // HAS_SHIFT_ENCODER
 
-  #if ENABLED(SDSUPPORT)
-    #if PIN_EXISTS(SD_DETECT)
-      SET_INPUT_PULLUP(SD_DETECT_PIN);
-    #endif
+  #if ENABLED(SDSUPPORT) && PIN_EXISTS(SD_DETECT)
+    SET_INPUT_PULLUP(SD_DETECT_PIN);
     lcd_sd_status = 2; // UNKNOWN
   #endif
 
@@ -768,8 +766,7 @@ void MarlinUI::update() {
 
   #endif // HAS_LCD_MENU
 
-  #if ENABLED(SDSUPPORT)
-
+ #if ENABLED(SDSUPPORT) && PIN_EXISTS(SD_DETECT)
     const uint8_t sd_status = (uint8_t)IS_SD_INSERTED();
     if (sd_status != lcd_sd_status && detected()) {
 
@@ -784,18 +781,17 @@ void MarlinUI::update() {
         else
           set_status_P(PSTR(MSG_SD_INSERTED));
       }
-      #if PIN_EXISTS(SD_DETECT)
-        else {
-          card.release();
-          if (old_sd_status != 2) {
-            set_status_P(PSTR(MSG_SD_REMOVED));
-            if (!on_status_screen()) return_to_status();
+      else {
+        card.release();
+        if (old_sd_status != 2) {
+          set_status_P(PSTR(MSG_SD_REMOVED));
+          if (!on_status_screen()) return_to_status();
           }
         }
+    }
 
         init_lcd(); // May revive the LCD if static electricity killed it
 
-      #endif
 
       refresh();
 
@@ -807,7 +803,7 @@ void MarlinUI::update() {
       #endif
     }
 
-  #endif // SDSUPPORT
+  #endif // SDSUPPORT && SD_DETECT_PIN
 
   if (ELAPSED(ms, next_lcd_update_ms)
     #if HAS_GRAPHICAL_LCD
