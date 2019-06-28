@@ -40,7 +40,7 @@
  */
 #define CONFIGURATION_H_VERSION 020000
 #undef STRING_DISTRIBUTION_DATE
-#define STRING_DISTRIBUTION_DATE "2019-06-23"
+#define STRING_DISTRIBUTION_DATE "2019-06-28"
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -128,7 +128,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 115200
+#define BAUDRATE 250000
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -326,7 +326,9 @@
     #define AUTO_POWER_E_FANS
     #define AUTO_POWER_CONTROLLERFAN
     #define AUTO_POWER_CHAMBER_FAN
-    #define POWER_TIMEOUT 30
+    //#define AUTO_POWER_E_TEMP        50 // (°C) Turn on PSU over this temperature
+    //#define AUTO_POWER_CHAMBER_TEMP  30 // (°C) Turn on PSU over this temperature
+   #define POWER_TIMEOUT 30
   #endif
 
 #endif
