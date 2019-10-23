@@ -39,8 +39,6 @@
  *
  */
 #define CONFIGURATION_H_VERSION 020000
-//#undef STRING_DISTRIBUTION_DATE
-//#define STRING_DISTRIBUTION_DATE "2019-08-24"
 
 //===========================================================================
 //============================= Getting Started =============================
