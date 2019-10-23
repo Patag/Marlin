@@ -39,6 +39,8 @@
 
 #include <pins_arduino.h>
 
+#include "../../inc/MarlinConfigPre.h"
+
 /**
  * Utility functions
  */
@@ -63,27 +65,19 @@
 #define _READ(IO) bool(DIO ## IO ## _WPORT -> PIO_PDSR & MASK(DIO ## IO ## _PIN))
 
 // Write to a pin
-#define _WRITE_VAR(IO,V) do { \
-  volatile Pio* port = digitalPinToPort(IO); \
-  const uint32_t mask = digitalPinToBitMask(IO); \
-  if (V) port->PIO_SODR = mask; \
-  else port->PIO_CODR = mask; \
-} while(0)
-
-// Write to a pin
 #define _WRITE(IO,V) do { \
   volatile Pio* port = (DIO ##  IO ## _WPORT); \
   const uint32_t mask = MASK(DIO ## IO ## _PIN); \
   if (V) port->PIO_SODR = mask; \
   else port->PIO_CODR = mask; \
-} while(0)
+}while(0)
 
 // Toggle a pin
 #define _TOGGLE(IO) _WRITE(IO, !READ(IO))
 
 #if MB(PRINTRBOARD_G2)
 
-  #include "G2_pins.h"
+  #include "fastio/G2_pins.h"
 
   // Set pin as input
   #define _SET_INPUT(IO) do{ \
@@ -160,7 +154,6 @@
 #define READ(IO)             _READ(IO)
 
 // Write to a pin (wrapper)
-#define WRITE_VAR(IO,V)      _WRITE_VAR(IO,V)
 #define WRITE(IO,V)          _WRITE(IO,V)
 
 // Toggle a pin (wrapper)

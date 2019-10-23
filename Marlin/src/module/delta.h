@@ -19,12 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
 /**
  * delta.h - Delta-specific functions
  */
-
-#pragma once
 
 extern float delta_height,
              delta_endstop_adj[ABC],

@@ -15,7 +15,7 @@
 #define Z_pitch_Thread    8
 #define E0_diam     10
 
-#define PI 3.1415926535897932384626433832795028841971693993751058
+// #define PI 3.1415926535897932384626433832795028841971693993751058
 
 #define X_St_per_U  (360/X_degStepper*X_uST)/(X_pitch_belt*X_teeth)
 #define Y_St_per_U  (360/Y_degStepper*Y_uST)/(Y_pitch_belt*Y_teeth)

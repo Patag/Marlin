@@ -1,0 +1,1 @@
+git clone -b bugfix-2.0.x --single-branch https://github.com/MarlinFirmware/Marlin.git

@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
 /**
  * This module is off by default, but can be enabled to facilitate the display of
@@ -40,7 +41,6 @@
  * faster to do a Max7219_Set_Column() with a rotation of 90 or 270 degrees than to do
  * a Max7219_Set_Row().    The opposite is true for rotations of 0 or 180 degrees.
  */
-#pragma once
 
 #ifndef MAX7219_ROTATE
   #define MAX7219_ROTATE 0
@@ -51,16 +51,6 @@
   #define MAX7219_NUMBER_UNITS 1
 #endif
 #define MAX7219_LINES (8 * (MAX7219_NUMBER_UNITS))
-
-#if _ROT == 0 || _ROT == 180
-  #define MAX7219_Y_LEDS          8
-  #define MAX7219_X_LEDS          MAX7219_LINES
-#elif _ROT == 90 || _ROT == 270
-  #define MAX7219_X_LEDS          8
-  #define MAX7219_Y_LEDS          MAX7219_LINES
-#else
-  #error "MAX7219_ROTATE must be a multiple of +/- 90°."
-#endif
 
 //
 // MAX7219 registers

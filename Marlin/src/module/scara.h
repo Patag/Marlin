@@ -19,12 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
 /**
  * scara.h - SCARA-specific functions
  */
-
-#pragma once
 
 #include "../core/macros.h"
 

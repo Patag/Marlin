@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
 /**
  * motion.h
@@ -26,7 +27,6 @@
  * High-level motion commands to feed the planner
  * Some of these methods may migrate to the planner class.
  */
-#pragma once
 
 #include "../inc/MarlinConfig.h"
 
@@ -185,6 +185,7 @@ void prepare_move_to_destination();
  */
 void do_blocking_move_to(const float rx, const float ry, const float rz, const float &fr_mm_s=0);
 void do_blocking_move_to_x(const float &rx, const float &fr_mm_s=0);
+void do_blocking_move_to_y(const float &ry, const float &fr_mm_s=0);
 void do_blocking_move_to_z(const float &rz, const float &fr_mm_s=0);
 void do_blocking_move_to_xy(const float &rx, const float &ry, const float &fr_mm_s=0);
 

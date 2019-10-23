@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
 /**
  * Custom Bitmap for splashscreen
@@ -31,7 +32,6 @@
  */
 #include <avr/pgmspace.h>
 
-#define CUSTOM_BOOTSCREEN_TIMEOUT   2500
 #define CUSTOM_BOOTSCREEN_BMPWIDTH  128
 #define CUSTOM_BOOTSCREEN_INVERTED
 

@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
 /**
  * gcode.h - Temporary container for all gcode handlers
@@ -82,6 +83,7 @@
  * M8   - Turn flood coolant ON. (Requires COOLANT_CONTROL)
  * M9   - Turn coolant OFF. (Requires COOLANT_CONTROL)
  * M12  - Set up closed loop control system. (Requires EXTERNAL_CLOSED_LOOP_CONTROLLER)
+ * M16  - Expected printer check. (Requires EXPECTED_PRINTER_CHECK)
  * M17  - Enable/Power all stepper motors
  * M18  - Disable all stepper motors; same as M84
  * M20  - List SD card. (Requires SDSUPPORT)
@@ -111,8 +113,8 @@
  * M76  - Pause the print job timer.
  * M77  - Stop the print job timer.
  * M78  - Show statistical information about the print jobs. (Requires PRINTCOUNTER)
- * M80  - Turn on Power Supply. (Requires POWER_SUPPLY > 0)
- * M81  - Turn off Power Supply. (Requires POWER_SUPPLY > 0)
+ * M80  - Turn on Power Supply. (Requires PSU_CONTROL)
+ * M81  - Turn off Power Supply. (Requires PSU_CONTROL)
  * M82  - Set E codes absolute (default).
  * M83  - Set E codes relative while in Absolute (G90) mode.
  * M84  - Disable steppers until next move, or use S<seconds> to specify an idle
@@ -273,7 +275,6 @@
  * T0-T3 - Select an extruder (tool) by index: "T<n> F<units/min>"
  *
  */
-#pragma once
 
 #include "../inc/MarlinConfig.h"
 #include "parser.h"
@@ -339,9 +340,9 @@ public:
 
     static void host_keepalive();
 
-    #define KEEPALIVE_STATE(n) gcode.busy_state = gcode.n
+    #define KEEPALIVE_STATE(N) REMEMBER(_KA_, gcode.busy_state, gcode.N)
   #else
-    #define KEEPALIVE_STATE(n) NOOP
+    #define KEEPALIVE_STATE(N) NOOP
   #endif
 
   static void dwell(millis_t time);
@@ -470,6 +471,10 @@ private:
 
   #if ENABLED(EXTERNAL_CLOSED_LOOP_CONTROLLER)
     static void M12();
+  #endif
+
+  #if ENABLED(EXPECTED_PRINTER_CHECK)
+    static void M16();
   #endif
 
   static void M17();
@@ -779,6 +784,10 @@ private:
 
   #if ENABLED(SD_ABORT_ON_ENDSTOP_HIT)
     static void M540();
+  #endif
+
+  #if ENABLED(BAUD_RATE_GCODE)
+    static void M575();
   #endif
 
   #if ENABLED(ADVANCED_PAUSE_FEATURE)

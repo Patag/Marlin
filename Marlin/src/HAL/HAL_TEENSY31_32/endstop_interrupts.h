@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
 /**
  * Endstop Interrupts
@@ -33,8 +34,6 @@
  * Test whether pins issue interrupts on your board by flashing 'pin_interrupt_test.ino'.
  * (Located in Marlin/buildroot/share/pin_interrupt_test/pin_interrupt_test.ino)
  */
-
-#pragma once
 
 #include "../../module/endstops.h"
 

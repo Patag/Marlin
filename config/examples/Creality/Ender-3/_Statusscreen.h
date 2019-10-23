@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
 /**
  * Custom Status Screen bitmap
@@ -33,7 +34,6 @@
 //
 // Status Screen Logo bitmap
 //
-#define STATUS_LOGO_Y            8
 #define STATUS_LOGO_WIDTH       39
 
 const unsigned char status_logo_bmp[] PROGMEM = {

@@ -80,21 +80,18 @@ void MazeGame::game_screen() {
   u8g.setColorIndex(1);
 
   // Draw Score
-  if (PAGE_UNDER(HEADER_H)) {
-    lcd_moveto(0, HEADER_H - 1);
-    lcd_put_int(score);
-  }
+  if (PAGE_UNDER(HEADER_H)) lcd_put_int(0, HEADER_H - 1, score);
 
   // Draw the maze
   // for (uint8_t n = 0; n < head_ind; ++n) {
   //   const pos_t &p = maze_walls[n], &q = maze_walls[n + 1];
   //   if (p.x == q.x) {
-  //     const int8_t y1 = GAMEY(MIN(p.y, q.y)), y2 = GAMEY(MAX(p.y, q.y));
+  //     const int8_t y1 = GAMEY(_MIN(p.y, q.y)), y2 = GAMEY(_MAX(p.y, q.y));
   //     if (PAGE_CONTAINS(y1, y2))
   //       u8g.drawVLine(GAMEX(p.x), y1, y2 - y1 + 1);
   //   }
   //   else if (PAGE_CONTAINS(GAMEY(p.y), GAMEY(p.y))) {
-  //     const int8_t x1 = GAMEX(MIN(p.x, q.x)), x2 = GAMEX(MAX(p.x, q.x));
+  //     const int8_t x1 = GAMEX(_MIN(p.x, q.x)), x2 = GAMEX(_MAX(p.x, q.x));
   //     u8g.drawHLine(x1, GAMEY(p.y), x2 - x1 + 1);
   //   }
   // }

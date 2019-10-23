@@ -97,6 +97,9 @@ void GcodeSuite::M0_M1() {
   #if ENABLED(HOST_PROMPT_SUPPORT)
     host_prompt_do(PROMPT_USER_CONTINUE, PSTR("M0/1 Break Called"), PSTR("Continue"));
   #endif
+  #if ENABLED(EXTENSIBLE_UI)
+    ExtUI::onStatusChanged(PSTR("M0/1 Break Called"));
+  #endif
 
   if (ms > 0) {
     ms += millis();  // wait until this time for a click
@@ -118,7 +121,6 @@ void GcodeSuite::M0_M1() {
   #endif
 
   wait_for_user = false;
-  KEEPALIVE_STATE(IN_HANDLER);
 }
 
 #endif // HAS_RESUME_CONTINUE
